@@ -3,23 +3,38 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const API_KEY = "c45a857c193f6302f2b5061c3b85e743";
-const API_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
+const BASE_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US`;
 
 const TopRated = () => {
   const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${BASE_URL}&page=${currentPage}`);
         setMovies(response.data.results);
+        setTotalPages(response.data.total_pages);
       } catch (error) {
         console.error("Error fetching the top-rated movies:", error);
       }
     };
 
     fetchMovies();
-  }, []);
+  }, [currentPage]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <div className="container p-4 mx-auto">
@@ -38,6 +53,22 @@ const TopRated = () => {
             <p className="text-gray-700">{movie.release_date}</p>
           </div>
         ))}
+      </div>
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="px-4 py-2 text-white bg-blue-500 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 text-white bg-blue-500 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

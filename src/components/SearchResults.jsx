@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -34,13 +34,15 @@ const SearchResults = () => {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {results.map((movie) => (
             <div key={movie.id} className="p-4 bg-gray-800 rounded">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-full h-auto mb-4 rounded"
-              />
-              <h2 className="text-xl font-bold text-white">{movie.title}</h2>
-              <p className="text-gray-400">{movie.release_date}</p>
+              <Link to={`/movie/${movie.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                  className="w-full h-auto mb-4 rounded"
+                />
+                <h2 className="text-xl font-bold text-white">{movie.title}</h2>
+                <p className="text-gray-400">{movie.release_date}</p>
+              </Link>
             </div>
           ))}
         </div>
