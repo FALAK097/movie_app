@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const API_KEY = "c45a857c193f6302f2b5061c3b85e743";
-const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+const API_URL = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`;
 
-const Home = () => {
+const Upcoming = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Home = () => {
         const response = await axios.get(API_URL);
         setMovies(response.data.results);
       } catch (error) {
-        console.error("Error fetching the movies:", error);
+        console.error("Error fetching the upcoming movies:", error);
       }
     };
 
@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className="container p-4 mx-auto">
-      <h1 className="mb-4 text-2xl font-bold">Popular Movies</h1>
+      <h1 className="mb-4 text-2xl font-bold">Upcoming Movies</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {movies.map((movie) => (
           <div key={movie.id} className="p-4 bg-white rounded shadow">
@@ -43,4 +43,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Upcoming;
