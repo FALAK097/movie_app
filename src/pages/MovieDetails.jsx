@@ -34,6 +34,11 @@ const MovieDetails = () => {
 
   return (
     <div className="container p-4 mx-auto">
+      <img
+        src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+        alt={movie.title}
+        className="hidden w-20 rounded-lg md:block md:w-2/3"
+      />
       <div className="flex flex-col p-4 bg-gray-900 rounded-lg shadow-lg md:flex-row">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
